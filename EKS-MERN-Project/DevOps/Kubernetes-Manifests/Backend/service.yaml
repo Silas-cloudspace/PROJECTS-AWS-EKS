@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: mern
+spec:
+  ports:
+  - name: backend-port
+    port: 80
+    protocol: TCP
+    targetPort: 3500
+  selector:
+    role: backend 
