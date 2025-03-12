@@ -12,7 +12,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: cloudspace-consulting.com
+    - host: <your domain name>
       http:
         paths:
           - path: /
