@@ -24,6 +24,6 @@ spec:
         - containerPort: 3000
         env:
         - name: REACT_APP_API_BASE_URL
-          value: "http://cloudspace-consulting.com/backend"
+          value: "http://<your domain name>/backend"
         - name: NODE_OPTIONS
           value: "--openssl-legacy-provider"
