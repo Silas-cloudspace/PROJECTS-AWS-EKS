@@ -12,7 +12,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: <your domain name>
+    - host: <your-domain-name>
       http:
         paths:
           - path: /
