@@ -34,6 +34,7 @@ resource "aws_subnet" "public_subnet_az1" {
 
   tags = {
     Name = "${var.project_name}-${var.environment}-public-subnet1"
+    "kubernetes.io/role/elb"  = "1"
   }
 }
 
@@ -47,6 +48,7 @@ resource "aws_subnet" "public_subnet_az2" {
 
   tags = {
     Name = "${var.project_name}-${var.environment}-public-subnet2"
+    "kubernetes.io/role/elb"  = "1"
   }
 }
 
@@ -89,6 +91,7 @@ resource "aws_subnet" "private_app_subnet_az1" {
 
   tags = {
     Name = "${var.project_name}-${var.environment}-private-subnet1"
+    "kubernetes.io/role/internal-elb" = "1"
   }
 }
 
@@ -102,6 +105,7 @@ resource "aws_subnet" "private_app_subnet_az2" {
 
   tags = {
     Name = "${var.project_name}-${var.environment}-private-subnet2"
+    "kubernetes.io/role/internal-elb" = "1"
   }
 }
 

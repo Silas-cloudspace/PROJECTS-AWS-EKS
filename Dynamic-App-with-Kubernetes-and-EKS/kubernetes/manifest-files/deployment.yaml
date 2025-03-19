@@ -4,17 +4,17 @@ metadata:
   name: backend
   namespace: surveys
   labels:
-    role: backend
+    app: backend
     env: dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      role: backend
+      app: backend
   template:
     metadata:
       labels:
-        role: backend
+        app: backend
     spec:
       containers:
       - name: backend

@@ -1,3 +1,5 @@
+guide
+
 # Terraform .gitignore
 # Local .terraform directories
 **/.terraform/*

@@ -14,13 +14,13 @@ resource "aws_eks_cluster" "cluster" {
     endpoint_public_access  = true
   }
 
-    enabled_cluster_log_types = [
-      "api",
-      "audit",
-      "authenticator",
-      "controllerManager",
-      "scheduler"
-   ]
+  enabled_cluster_log_types = [
+    "api",
+    "audit",
+    "authenticator",
+    "controllerManager",
+    "scheduler"
+  ]
 
   depends_on = [
     aws_iam_role.eks_cluster_role,

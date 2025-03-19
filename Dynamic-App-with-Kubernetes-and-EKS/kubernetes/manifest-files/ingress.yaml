@@ -10,7 +10,7 @@ metadata:
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: "surveys-app"
     alb.ingress.kubernetes.io/ssl-redirect: "443"
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-1:123456789012:certificate/12345678-1234-1234-1234-123456789012
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-1:381491868231:certificate/42c9bf77-33c3-4ac4-9a69-b64d8659a8a6
 spec:
   ingressClassName: alb
   rules:

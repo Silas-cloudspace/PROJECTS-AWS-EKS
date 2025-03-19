@@ -20,14 +20,14 @@ resource "aws_cloudwatch_metric_alarm" "eks_cluster_failed_node_count" {
   statistic           = "Maximum"
   threshold           = 0
   alarm_description   = "This metric monitors EKS failed nodes"
-  
+
   dimensions = {
     ClusterName = aws_eks_cluster.cluster.name
   }
-  
+
   # Add SNS topic ARN to receive notifications
-  alarm_actions    = [aws_sns_topic.alerts.arn]
-  ok_actions       = [aws_sns_topic.alerts.arn]
+  alarm_actions = [aws_sns_topic.alerts.arn]
+  ok_actions    = [aws_sns_topic.alerts.arn]
 }
 
 resource "aws_cloudwatch_metric_alarm" "eks_cluster_cpu_utilization" {
@@ -40,13 +40,13 @@ resource "aws_cloudwatch_metric_alarm" "eks_cluster_cpu_utilization" {
   statistic           = "Average"
   threshold           = 80
   alarm_description   = "This metric monitors EKS pod CPU utilization"
-  
+
   dimensions = {
     ClusterName = aws_eks_cluster.cluster.name
   }
-  
-  alarm_actions    = [aws_sns_topic.alerts.arn]
-  ok_actions       = [aws_sns_topic.alerts.arn]
+
+  alarm_actions = [aws_sns_topic.alerts.arn]
+  ok_actions    = [aws_sns_topic.alerts.arn]
 }
 
 resource "aws_cloudwatch_metric_alarm" "eks_cluster_memory_utilization" {
@@ -59,19 +59,19 @@ resource "aws_cloudwatch_metric_alarm" "eks_cluster_memory_utilization" {
   statistic           = "Average"
   threshold           = 80
   alarm_description   = "This metric monitors EKS pod memory utilization"
-  
+
   dimensions = {
     ClusterName = aws_eks_cluster.cluster.name
   }
-  
-  alarm_actions    = [aws_sns_topic.alerts.arn]
-  ok_actions       = [aws_sns_topic.alerts.arn]
+
+  alarm_actions = [aws_sns_topic.alerts.arn]
+  ok_actions    = [aws_sns_topic.alerts.arn]
 }
 
 # 3. CloudWatch Dashboard for EKS
 resource "aws_cloudwatch_dashboard" "eks_dashboard" {
   dashboard_name = "${var.project_name}-${var.environment}-eks-dashboard"
-  
+
   dashboard_body = jsonencode({
     widgets = [
       {
@@ -185,15 +185,15 @@ resource "aws_cloudwatch_metric_alarm" "rds_cpu_alarm" {
   statistic           = "Average"
   threshold           = 80
   alarm_description   = "This alarm monitors RDS database CPU utilization"
-  
+
   dimensions = {
     DBInstanceIdentifier = "${var.project_name}-${var.environment}-surveys-db"
   }
-  
-  
-  alarm_actions       = [aws_sns_topic.alerts.arn]
-  ok_actions          = [aws_sns_topic.alerts.arn]
-  
+
+
+  alarm_actions = [aws_sns_topic.alerts.arn]
+  ok_actions    = [aws_sns_topic.alerts.arn]
+
   tags = {
     Name = "${var.project_name}-${var.environment}-rds-high-cpu"
   }
@@ -208,16 +208,16 @@ resource "aws_cloudwatch_metric_alarm" "rds_storage_alarm" {
   namespace           = "AWS/RDS"
   period              = 300
   statistic           = "Average"
-  threshold           = 5000000000  # 5GB in bytes
+  threshold           = 5000000000 # 5GB in bytes
   alarm_description   = "This alarm monitors RDS database free storage space"
-  
+
   dimensions = {
     DBInstanceIdentifier = "${var.project_name}-${var.environment}-surveys-db"
   }
-  
-  alarm_actions       = [aws_sns_topic.alerts.arn]
-  ok_actions          = [aws_sns_topic.alerts.arn]
-  
+
+  alarm_actions = [aws_sns_topic.alerts.arn]
+  ok_actions    = [aws_sns_topic.alerts.arn]
+
   tags = {
     Name = "${var.project_name}-${var.environment}-rds-low-storage"
   }
@@ -226,7 +226,7 @@ resource "aws_cloudwatch_metric_alarm" "rds_storage_alarm" {
 # Add a dashboard for RDS metrics visualization
 resource "aws_cloudwatch_dashboard" "rds_dashboard" {
   dashboard_name = "${var.project_name}-${var.environment}-rds-dashboard"
-  
+
   dashboard_body = jsonencode({
     widgets = [
       {
