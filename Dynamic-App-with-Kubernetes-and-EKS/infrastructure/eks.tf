@@ -39,17 +39,17 @@ resource "aws_eks_node_group" "main" {
     aws_subnet.private_app_subnet_az2.id
   ]
 
-  # Add instance type configuration
-  instance_types = ["t3.medium"]
+  # Instance type configuration
+  instance_types = var.eks_node_instance_types
 
-  # Add capacity type (ON_DEMAND or SPOT)
-  capacity_type = "ON_DEMAND"
+  # Capacity type (ON_DEMAND or SPOT)
+  capacity_type = var.eks_node_capacity_type
 
-  # Add disk configuration
-  disk_size = 20
+  # Disk configuration
+  disk_size = var.eks_node_disk_size
 
   # AMI type (AL2_x86_64, AL2_x86_64_GPU, AL2_ARM_64, etc.)
-  ami_type = "AL2_x86_64"
+  ami_type = var.eks_node_ami_type
 
   # Node tags - enable SSM access by adding the AmazonSSMManagedInstanceCore tag
   tags = {
@@ -59,9 +59,9 @@ resource "aws_eks_node_group" "main" {
   }
 
   scaling_config {
-    desired_size = 2
-    max_size     = 6
-    min_size     = 2
+    desired_size = 4
+    max_size     = 10
+    min_size     = 3
   }
 
   depends_on = [

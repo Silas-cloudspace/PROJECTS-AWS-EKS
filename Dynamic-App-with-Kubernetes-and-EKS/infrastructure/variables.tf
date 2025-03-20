@@ -57,8 +57,64 @@ variable "aws_user_name" {
 }
 
 # Database Variables
-variable "db_username" {
+variable "engine" {
+  description = "Database engine"
+  type        = string
+}
+
+variable "engine_version" {
+  description = "Version of the engine"
+  type        = string
+}
+
+variable "instance_class" {
   description = "Username for the RDS PostgreSQL instance"
+  type        = string
+}
+
+variable "allocated_storage" {
+  description = "Username for the RDS PostgreSQL instance"
+  type        = string
+}
+
+variable "max_allocated_storage" {
+  description = "Username for the RDS PostgreSQL instance"
+  type        = string
+}
+
+variable "storage_type" {
+  description = "Username for the RDS PostgreSQL instance"
+  type        = string
+}
+
+variable "db_name" {
+  description = "Username for the RDS PostgreSQL instance"
+  type        = string
+}
+
+variable "parameter_group_name" {
+  description = "Username for the RDS PostgreSQL instance"
+  type        = string
+}
+
+# EKS Node Group variables
+variable "eks_node_instance_types" {
+  description = "Instance types for EKS node group"
+  type        = list(string)
+}
+
+variable "eks_node_capacity_type" {
+  description = "Capacity type for EKS node group (ON_DEMAND or SPOT)"
+  type        = string
+}
+
+variable "eks_node_disk_size" {
+  description = "Disk size in GB for EKS node group instances"
+  type        = number
+}
+
+variable "eks_node_ami_type" {
+  description = "AMI type for EKS node group (AL2_x86_64, AL2_x86_64_GPU, AL2_ARM_64, etc.)"
   type        = string
 }
 

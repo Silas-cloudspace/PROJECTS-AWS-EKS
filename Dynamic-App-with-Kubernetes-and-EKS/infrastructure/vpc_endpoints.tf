@@ -1,4 +1,4 @@
-# VPC Endpoints required for SSM Session Manager
+# VPC Endpoints for SSM Session Manager
 # SSM Endpoint
 resource "aws_vpc_endpoint" "ssm" {
   vpc_id            = aws_vpc.vpc.id
