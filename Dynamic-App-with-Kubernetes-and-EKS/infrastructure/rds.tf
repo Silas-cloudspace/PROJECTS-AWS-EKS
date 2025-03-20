@@ -24,28 +24,27 @@ resource "random_password" "db_password" {
 
 # RDS PostgreSQL instance
 resource "aws_db_instance" "surveys_db" {
-  identifier              = "${var.project_name}-${var.environment}-surveys-db"
-  engine                  = var.engine
-  engine_version          = var.engine_version
-  instance_class          = var.instance_class
-  allocated_storage       = var.allocated_storage
-  max_allocated_storage   = var.max_allocated_storage
-  storage_type            = var.storage_type
-  db_name                 = var.db_name
-  username                = random_string.db_username.result
-  password                = random_password.db_password.result
-  parameter_group_name    = var.parameter_group_name
-  db_subnet_group_name    = aws_db_subnet_group.surveys_db_subnet_group.name
-  skip_final_snapshot     = true # Changed to false in development
+  identifier                = "${var.project_name}-${var.environment}-surveys-db"
+  engine                    = var.engine
+  engine_version            = var.engine_version
+  instance_class            = var.instance_class
+  allocated_storage         = var.allocated_storage
+  max_allocated_storage     = var.max_allocated_storage
+  storage_type              = var.storage_type
+  db_name                   = var.db_name
+  username                  = random_string.db_username.result
+  password                  = random_password.db_password.result
+  parameter_group_name      = var.parameter_group_name
+  db_subnet_group_name      = aws_db_subnet_group.surveys_db_subnet_group.name
+  skip_final_snapshot       = true # Changed to false in development
   final_snapshot_identifier = "${var.project_name}-${var.environment}-final-snapshot"
-  vpc_security_group_ids  = [aws_security_group.surveys_db_sg.id]
-  multi_az                = true
-  backup_retention_period = 30 
-  backup_window           = "02:00-04:00"
-  maintenance_window      = "mon:01:00-mon:03:00"
-  storage_encrypted       = true
-  deletion_protection     = true  
-  delete_automated_backups = false  
+  vpc_security_group_ids    = [aws_security_group.surveys_db_sg.id]
+  multi_az                  = true
+  backup_retention_period   = 30
+  backup_window             = "02:00-03:00"
+  maintenance_window        = "mon:04:00-mon:05:00"
+  storage_encrypted         = true
+  delete_automated_backups  = false
 
   # Reference to monitoring configuration defined in cloudwatch.tf
   monitoring_interval = 60

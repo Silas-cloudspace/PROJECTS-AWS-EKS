@@ -97,6 +97,11 @@ resource "aws_iam_role" "rds_monitoring_role" {
   }
 }
 
+resource "aws_iam_role_policy_attachment" "eks_node_cloudwatch" {
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+  role       = aws_iam_role.eks_node_role.name
+}
+
 resource "aws_iam_role_policy_attachment" "rds_monitoring_role_policy" {
   role       = aws_iam_role.rds_monitoring_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
@@ -184,6 +189,10 @@ resource "aws_iam_role_policy_attachment" "load_balancer_controller" {
 data "aws_caller_identity" "current" {}
 
 data "aws_eks_cluster" "cluster" {
-  name = "topsurvey-dev-eks-cluster" 
+  name = "topsurvey-dev-eks-cluster"
+
+  depends_on = [
+    aws_eks_cluster.cluster
+  ]
 }
 

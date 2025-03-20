@@ -4,13 +4,14 @@ metadata:
   name: surveys-alb-dev
   namespace: surveys
   annotations:
-    kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: "surveys-app"
     alb.ingress.kubernetes.io/ssl-redirect: "443"
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-1:381491868231:certificate/42c9bf77-33c3-4ac4-9a69-b64d8659a8a6
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-1:381491868231:certificate/252821ea-0f63-4449-b96a-a0b26facd099
+    alb.ingress.kubernetes.io/healthcheck-path: /health
+    alb.ingress.kubernetes.io/success-codes: '200'
 spec:
   ingressClassName: alb
   rules:

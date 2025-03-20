@@ -33,8 +33,8 @@ resource "aws_subnet" "public_subnet_az1" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${var.project_name}-${var.environment}-public-subnet1"
-    "kubernetes.io/role/elb"  = "1"
+    Name                     = "${var.project_name}-${var.environment}-public-subnet1"
+    "kubernetes.io/role/elb" = "1"
   }
 }
 
@@ -47,8 +47,8 @@ resource "aws_subnet" "public_subnet_az2" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${var.project_name}-${var.environment}-public-subnet2"
-    "kubernetes.io/role/elb"  = "1"
+    Name                     = "${var.project_name}-${var.environment}-public-subnet2"
+    "kubernetes.io/role/elb" = "1"
   }
 }
 
@@ -90,7 +90,7 @@ resource "aws_subnet" "private_app_subnet_az1" {
   map_public_ip_on_launch = false
 
   tags = {
-    Name = "${var.project_name}-${var.environment}-private-subnet1"
+    Name                              = "${var.project_name}-${var.environment}-private-subnet1"
     "kubernetes.io/role/internal-elb" = "1"
   }
 }
@@ -104,7 +104,7 @@ resource "aws_subnet" "private_app_subnet_az2" {
   map_public_ip_on_launch = false
 
   tags = {
-    Name = "${var.project_name}-${var.environment}-private-subnet2"
+    Name                              = "${var.project_name}-${var.environment}-private-subnet2"
     "kubernetes.io/role/internal-elb" = "1"
   }
 }
