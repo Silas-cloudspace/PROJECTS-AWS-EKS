@@ -57,26 +57,6 @@ resource "aws_cloudfront_distribution" "frontend" {
     compress               = true   # Compression enabled
   }
 
-  ordered_cache_behavior {
-    path_pattern     = "/api/*" # Path for your dynamic content
-    allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "S3-${aws_s3_bucket.frontend.bucket}"
-
-    forwarded_values {
-      query_string = true
-      headers      = ["Origin", "Authorization"]
-      cookies {
-        forward = "all"
-      }
-    }
-
-    viewer_protocol_policy = "redirect-to-https"
-    min_ttl                = 0
-    default_ttl            = 0
-    max_ttl                = 60 # 1 minute maximum for dynamic content
-  }
-
   custom_error_response {
     error_code            = 403
     response_code         = 200

@@ -189,7 +189,7 @@ resource "aws_iam_role_policy_attachment" "load_balancer_controller" {
 data "aws_caller_identity" "current" {}
 
 data "aws_eks_cluster" "cluster" {
-  name = "topsurvey-dev-eks-cluster"
+  name = "${var.project_name}-${var.environment}-eks-cluster"
 
   depends_on = [
     aws_eks_cluster.cluster

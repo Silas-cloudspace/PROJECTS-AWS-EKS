@@ -68,3 +68,28 @@ resource "aws_eks_node_group" "main" {
     aws_iam_role.eks_node_role
   ]
 }
+
+# Enable Container Insights as an EKS addon
+resource "aws_eks_addon" "container_insights" {
+  cluster_name  = aws_eks_cluster.cluster.name
+  addon_name    = "amazon-cloudwatch-observability"
+  addon_version = "v3.5.0-eksbuild.1" # Use the latest version available
+  # run: <aws eks describe-addon-versions --addon-name amazon-cloudwatch-observability> to check what's the latest version
+
+
+  # This is important to avoid Terraform trying to replace the add-on
+  resolve_conflicts_on_create = "OVERWRITE"
+  resolve_conflicts_on_update = "PRESERVE"
+
+  depends_on = [
+    aws_eks_cluster.cluster,
+    aws_eks_node_group.main
+  ]
+}
+
+# Attach CloudWatch Agent Server Policy to the node role
+# This is required for Container Insights to work properly
+resource "aws_iam_role_policy_attachment" "cloudwatch_agent_server_policy" {
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+  role       = aws_iam_role.eks_node_role.name
+}
