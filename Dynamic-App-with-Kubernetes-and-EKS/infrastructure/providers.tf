@@ -12,7 +12,7 @@ terraform {
   backend "s3" {
     bucket       = "eks-dynamic-app-state-st"
     key          = "global/s3/terraform.tfstate"
-    region       = "eu-west-1"
+    region       = "<your region"
     encrypt      = true
     use_lockfile = true
   }

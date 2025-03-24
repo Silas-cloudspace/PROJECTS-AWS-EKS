@@ -1,5 +1,5 @@
 # environment variables
-region       = "eu-west-1"
+region       = "your region"
 project_name = "topsurvey"
 environment  = "dev"
 
@@ -28,13 +28,10 @@ eks_node_capacity_type  = "ON_DEMAND"
 eks_node_disk_size      = 100
 eks_node_ami_type       = "AL2_x86_64"
 
-# IAM variable
-aws_user_name = "Silas_Teixeira"
-
 # route53 variables
-domain_name       = "cloudspace-consulting.com"
-alternative_names = "*.cloudspace-consulting.com"
+domain_name       = "<your domain>"
+alternative_names = "*.<your domain>"
 record_name       = "topsurvey"
 
 # SNS variables
-email = "silas.cloudspace@gmail.com"
+email = "<your email>"

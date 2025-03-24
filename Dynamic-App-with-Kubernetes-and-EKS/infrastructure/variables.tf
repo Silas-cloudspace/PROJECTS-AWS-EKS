@@ -50,12 +50,6 @@ variable "data_subnet_az2_cidr" {
   type        = string
 }
 
-# IAM variable
-variable "aws_user_name" {
-  description = "AWS user name"
-  type        = string
-}
-
 # Database Variables
 variable "engine" {
   description = "Database engine"
