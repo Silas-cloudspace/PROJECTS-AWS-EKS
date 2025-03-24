@@ -9,13 +9,13 @@ metadata:
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: "surveys-app"
     alb.ingress.kubernetes.io/ssl-redirect: "443"
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-west-1:381491868231:certificate/2ba0ce89-97bf-46d1-abd3-f5c17570118f
+    alb.ingress.kubernetes.io/certificate-arn: <your acm certificate arn>
     alb.ingress.kubernetes.io/healthcheck-path: /health
     alb.ingress.kubernetes.io/success-codes: '200'
 spec:
   ingressClassName: alb
   rules:
-    - host: api.cloudspace-consulting.com 
+    - host: <your api domain>
       http:
         paths:
           - path: /
