@@ -9,9 +9,7 @@ resource "aws_cloudwatch_log_group" "eks_cluster_logs" {
   }
 }
 
-# SNS Topic subscription is moved to sns.tf file
-
-# 2. EKS Control Plane Metrics Alarms - Using native CloudWatch metrics
+# EKS Control Plane Metrics Alarms - Using native CloudWatch metrics
 resource "aws_cloudwatch_metric_alarm" "eks_cluster_api_errors" {
   alarm_name          = "${var.project_name}-${var.environment}-eks-api-errors"
   comparison_operator = "GreaterThanThreshold"
@@ -50,7 +48,7 @@ resource "aws_cloudwatch_metric_alarm" "eks_control_plane_cpu" {
   ok_actions    = [aws_sns_topic.alerts.arn]
 }
 
-# 3. Container Insights Alarms - These alarms use the ContainerInsights namespace
+# Container Insights Alarms - These alarms use the ContainerInsights namespace
 resource "aws_cloudwatch_metric_alarm" "pod_cpu_utilization" {
   alarm_name          = "${var.project_name}-${var.environment}-pod-high-cpu"
   comparison_operator = "GreaterThanThreshold"
@@ -97,7 +95,7 @@ resource "aws_cloudwatch_metric_alarm" "pod_memory_utilization" {
   ]
 }
 
-# 4. Enhanced CloudWatch Dashboard for EKS with Container Insights metrics
+# Enhanced CloudWatch Dashboard for EKS with Container Insights metrics
 resource "aws_cloudwatch_dashboard" "eks_dashboard" {
   dashboard_name = "${var.project_name}-${var.environment}-eks-dashboard"
 
@@ -295,7 +293,7 @@ resource "aws_cloudwatch_dashboard" "eks_dashboard" {
   ]
 }
 
-# 5. EC2 Auto Scaling Group Metrics for EKS Nodes
+# EC2 Auto Scaling Group Metrics for EKS Nodes
 resource "aws_cloudwatch_metric_alarm" "eks_node_group_high_cpu" {
   alarm_name          = "${var.project_name}-${var.environment}-eks-nodes-high-cpu"
   comparison_operator = "GreaterThanThreshold"
@@ -315,7 +313,7 @@ resource "aws_cloudwatch_metric_alarm" "eks_node_group_high_cpu" {
   ok_actions    = [aws_sns_topic.alerts.arn]
 }
 
-# 6. CloudWatch alarm for RDS high CPU utilization
+# CloudWatch alarm for RDS high CPU utilization
 resource "aws_cloudwatch_metric_alarm" "rds_cpu_alarm" {
   alarm_name          = "${var.project_name}-${var.environment}-rds-high-cpu"
   comparison_operator = "GreaterThanThreshold"
@@ -339,7 +337,7 @@ resource "aws_cloudwatch_metric_alarm" "rds_cpu_alarm" {
   }
 }
 
-# 7. CloudWatch alarm for RDS low free storage space
+# CloudWatch alarm for RDS low free storage space
 resource "aws_cloudwatch_metric_alarm" "rds_storage_alarm" {
   alarm_name          = "${var.project_name}-${var.environment}-rds-low-storage"
   comparison_operator = "LessThanThreshold"
@@ -363,7 +361,7 @@ resource "aws_cloudwatch_metric_alarm" "rds_storage_alarm" {
   }
 }
 
-# 8. RDS Dashboard
+# RDS Dashboard
 resource "aws_cloudwatch_dashboard" "rds_dashboard" {
   dashboard_name = "${var.project_name}-${var.environment}-rds-dashboard"
 
@@ -438,7 +436,7 @@ resource "aws_cloudwatch_dashboard" "rds_dashboard" {
   })
 }
 
-# 9. Comprehensive Dashboard with Container Insights
+# Comprehensive Dashboard with Container Insights
 resource "aws_cloudwatch_dashboard" "all_services_dashboard" {
   dashboard_name = "${var.project_name}-${var.environment}-all-services"
 

@@ -21,6 +21,7 @@ resource "aws_s3_bucket_policy" "frontend" {
 }
 
 resource "aws_cloudfront_distribution" "frontend" {
+  web_acl_id = aws_wafv2_web_acl.cloudfront.arn
   aliases             = ["${var.record_name}.${var.domain_name}"]
   enabled             = true
   default_root_object = "index.html"
