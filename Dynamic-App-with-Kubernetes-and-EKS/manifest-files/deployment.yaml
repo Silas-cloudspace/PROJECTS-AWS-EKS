@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: <your ecr image>
+        image: <your-ecr-repo-url>
         imagePullPolicy: Always
         ports:
         - containerPort: 80

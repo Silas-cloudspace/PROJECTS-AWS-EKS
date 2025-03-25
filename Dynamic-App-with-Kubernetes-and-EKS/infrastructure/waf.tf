@@ -287,9 +287,9 @@ resource "aws_wafv2_web_acl" "cloudfront" {
   }
 }
 
-# CloudWatch Log Group for WAF logs
+# CloudWatch Log Group for Regional WAF logs (eu-west-1)
 resource "aws_cloudwatch_log_group" "waf_logs" {
-  name              = "/aws/wafv2/${var.project_name}-${var.environment}"
+  name              = "aws-waf-logs-${var.project_name}-${var.environment}"
   retention_in_days = 30
 
   tags = {
@@ -298,21 +298,33 @@ resource "aws_cloudwatch_log_group" "waf_logs" {
   }
 }
 
+# CloudWatch Log Group for CloudFront WAF logs (us-east-1)
+resource "aws_cloudwatch_log_group" "waf_logs_us_east" {
+  provider          = aws.us_east_1
+  name              = "aws-waf-logs-${var.project_name}-${var.environment}"
+  retention_in_days = 30
+
+  tags = {
+    Name        = "${var.project_name}-${var.environment}-waf-logs-global"
+    Environment = var.environment
+  }
+}
+
 # Enable WAF logging for Regional WAF
 resource "aws_wafv2_web_acl_logging_configuration" "regional_logs" {
-  log_destination_configs = [aws_cloudwatch_log_group.waf_logs.arn]
   resource_arn            = aws_wafv2_web_acl.regional.arn
+  log_destination_configs = [aws_cloudwatch_log_group.waf_logs.arn]
 }
 
 # Enable WAF logging for CloudFront WAF
 resource "aws_wafv2_web_acl_logging_configuration" "cloudfront_logs" {
   provider                = aws.us_east_1
-  log_destination_configs = [aws_cloudwatch_log_group.waf_logs.arn]
   resource_arn            = aws_wafv2_web_acl.cloudfront.arn
+  log_destination_configs = [aws_cloudwatch_log_group.waf_logs_us_east.arn]
 }
 
 # Metric filter for all blocked requests
-resource "aws_cloudwatch_metric_filter" "blocked_requests" {
+resource "aws_cloudwatch_log_metric_filter" "blocked_requests" {
   name           = "${var.project_name}-${var.environment}-blocked-requests"
   pattern        = "{ $.action = \"BLOCK\" }"
   log_group_name = aws_cloudwatch_log_group.waf_logs.name
@@ -325,7 +337,7 @@ resource "aws_cloudwatch_metric_filter" "blocked_requests" {
 }
 
 # Alarm for high number of blocked requests (overall)
-resource "aws_cloudwatch_alarm" "high_blocked_requests" {
+resource "aws_cloudwatch_metric_alarm" "high_blocked_requests" {
   alarm_name          = "${var.project_name}-${var.environment}-high-blocked-requests"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
@@ -340,7 +352,7 @@ resource "aws_cloudwatch_alarm" "high_blocked_requests" {
 }
 
 # Metric filter for SQL injection attacks
-resource "aws_cloudwatch_metric_filter" "sql_injection_attacks" {
+resource "aws_cloudwatch_log_metric_filter" "sql_injection_attacks" {
   name           = "${var.project_name}-${var.environment}-sql-injection"
   pattern        = "{ $.ruleGroupList.0.terminatingRule.ruleId = \"SQLInjectionRule\" }"
   log_group_name = aws_cloudwatch_log_group.waf_logs.name
@@ -353,7 +365,7 @@ resource "aws_cloudwatch_metric_filter" "sql_injection_attacks" {
 }
 
 # Alarm for SQL injection attacks
-resource "aws_cloudwatch_alarm" "sql_injection_attacks" {
+resource "aws_cloudwatch_metric_alarm" "sql_injection_attacks" {
   alarm_name          = "${var.project_name}-${var.environment}-sql-injection-alert"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
@@ -368,7 +380,7 @@ resource "aws_cloudwatch_alarm" "sql_injection_attacks" {
 }
 
 # Metric filter for XSS attacks
-resource "aws_cloudwatch_metric_filter" "xss_attacks" {
+resource "aws_cloudwatch_log_metric_filter" "xss_attacks" {
   name           = "${var.project_name}-${var.environment}-xss-attacks"
   pattern        = "{ $.ruleGroupList.0.terminatingRule.ruleId = \"XSSRule\" }"
   log_group_name = aws_cloudwatch_log_group.waf_logs.name
@@ -381,7 +393,7 @@ resource "aws_cloudwatch_metric_filter" "xss_attacks" {
 }
 
 # Alarm for XSS attacks
-resource "aws_cloudwatch_alarm" "xss_attacks" {
+resource "aws_cloudwatch_metric_alarm" "xss_attacks" {
   alarm_name          = "${var.project_name}-${var.environment}-xss-attacks-alert"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"

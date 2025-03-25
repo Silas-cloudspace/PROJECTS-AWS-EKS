@@ -4,7 +4,7 @@ metadata:
   name: waf-config
   namespace: kube-system
 data:
-  waf-web-acl-arn: <replace with ARN terraform output>
+  waf-web-acl-arn: <your WAF Web ACL ARN>
 
 
 

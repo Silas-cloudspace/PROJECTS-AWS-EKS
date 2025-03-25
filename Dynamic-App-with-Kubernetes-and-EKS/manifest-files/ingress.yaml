@@ -9,14 +9,14 @@ metadata:
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/group.name: "surveys-app"
     alb.ingress.kubernetes.io/ssl-redirect: "443"
-    alb.ingress.kubernetes.io/certificate-arn: <your acm certificate arn>
+    alb.ingress.kubernetes.io/certificate-arn: <your certificate arn>
     alb.ingress.kubernetes.io/healthcheck-path: /health
     alb.ingress.kubernetes.io/success-codes: '200'
-    alb.ingress.kubernetes.io/wafv2-acl-arn: <replace with ARN terraform output>
+    alb.ingress.kubernetes.io/wafv2-acl-arn: <your waf acl arn>
 spec:
   ingressClassName: alb
   rules:
-    - host: <your api domain>
+    - host: <your domain>
       http:
         paths:
           - path: /

@@ -1,5 +1,5 @@
 # environment variables
-region       = "your region"
+region       = "<your region>"
 project_name = "topsurvey"
 environment  = "dev"
 
@@ -29,8 +29,8 @@ eks_node_disk_size      = 100
 eks_node_ami_type       = "AL2_x86_64"
 
 # route53 variables
-domain_name       = "<your domain>"
-alternative_names = "*.<your domain>"
+domain_name       = "<your domain name>"
+alternative_names = "*.<your domain name>"
 record_name       = "topsurvey"
 
 # SNS variables
